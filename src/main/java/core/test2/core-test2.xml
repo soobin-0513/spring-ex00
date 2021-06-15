@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<!-- 
+	클래스가 수천개 일수도 있어서 하나하나 작성하는건 무리!! 
+	<bean id="bag" class="core.test2.Bag"></bean>
+	<bean id="book" class="core.test2.Book"></bean>
+ -->
+ 
+ <!--  어느패키지에있는 클래스들을 스캔할지 명시 -->
+ 	<context:component-scan base-package="core.test2"></context:component-scan>
+</beans>
