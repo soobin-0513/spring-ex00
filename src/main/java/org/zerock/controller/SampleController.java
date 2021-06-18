@@ -6,13 +6,18 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.TodoDTO;
 
@@ -82,15 +87,61 @@ public class SampleController {
 	
 	// 137쪽 ex03
 //	http://localhost:8080/controller/sample/ex03?title=aa&dueDate=2020-03-03
-		@GetMapping("/ex03")
-		public String ex03(TodoDTO todo) {
-			log.info("todo:" + todo);
-			return "ex03";
-		}
+	@GetMapping("/ex03")
+	public String ex03(TodoDTO todo) {
+		log.info("todo:" + todo);
+		return "ex03";
+	}
 
-		@InitBinder
-		public void initBinder(WebDataBinder binder) {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		}
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+	}
+		
+		
+	//144page 
+	@GetMapping("/ex05")
+	public void ex05() {
+		log.info("/ex05....");
+	}	
+		
+	//146page
+	@GetMapping("/ex06")
+	public @ResponseBody SampleDTO ex06() {
+		log.info("ex06....");
+		
+		SampleDTO dto = new SampleDTO();
+		dto.setAge(10);
+		dto.setName("홍길");
+		
+		return dto;
+	}
+	
+	//148page 
+	@GetMapping("/ex07")
+	public ResponseEntity<String> ex07() {
+		log.info("/ex07....");
+
+		String msg = "{\"name\": \"홍길동\"}";
+
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "application/json; charset=UTF-8");
+
+		return new ResponseEntity<String>(msg, header, HttpStatus.OK);
+	}
+
+
+	// 140쪽
+	@GetMapping("/ex04")
+	public String ex04(SampleDTO dto, @ModelAttribute("page") int page) {
+
+		log.info("dto:" + dto);
+		log.info("page:" + page);
+
+		return "/sample/ex04";
+	}
+	
 }
+
+
