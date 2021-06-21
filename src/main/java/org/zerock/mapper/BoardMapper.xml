@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+	  <select id="getList" resultType="org.zerock.domain.BoardVO">
+	  <!-- CDATA 안에 쿼리를 사용하면 쿼리 내용의 괄호나 특수문자를 XML parser로 인식하지 않고
+	   "문자열"로 인식한다 이말입니다. 문자열로! p188 
+	   -->
+	  <!--컬럼명 프로퍼티명  -->
+	  <![CDATA[
+	  --  comment
+	  	SELECT 
+	  		bno bno,
+	  		title title,
+	  		content content,
+	  		writer writer,
+	  		regdate regdate,
+	  		updatedate updatedate
+	  	FROM tbl_board
+	  ]]>
+	  	
+	  	
+	  </select>
+	  
+	  <insert id="insert">
+	  		INSERT INTO tbl_board (title, content, writer)
+	  		VALUES (#{title}, #{content}, #{writer})
+	  </insert>
+	  
+	  <!--  						새로입력되는 레코드에 키를 얻어오기위해서 사용해야되는것 -->
+	  <insert id="insertSelectKey" useGeneratedKeys="true" keyProperty="bno" keyColumn="bno">
+		  	INSERT INTO tbl_board (title, content, writer)
+		  	VALUES (#{title}, #{content}, #{writer})
+	  </insert>
+	  
+	  <select id="read" resultType ="org.zerock.domain.BoardVO">
+		  	SELECT 
+		  	bno bno,
+		  	title title,
+		  	content content,
+		  	writer writer,
+		  	regdate regdate,
+		  	updatedate updatedate
+		  	FROM tbl_board
+		  	WHERE bno = #{bno}
+	  </select>
+	  
+	  <delete id="delete">
+	  		DELETE FROM tbl_board WHERE bno = #{bno}
+	  </delete>
+	  
+	  <update id="update">
+	  		UPDATE tbl_board
+
+		  	SET
+		  	    title = #{title}, 
+		  	    content = #{content},
+		  	    writer = #{writer},
+		  	    updateDate = NOW()
+
+		  	WHERE
+		  	    bno = #{bno}
+	  </update>
+	  
+	  
+</mapper>
