@@ -20,6 +20,7 @@
 	  		regdate regdate,
 	  		updatedate updatedate
 	  	FROM tbl_board
+	  	ORDER BY bno DESC
 	  ]]>
 	  	
 	  	
