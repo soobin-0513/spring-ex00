@@ -26,6 +26,34 @@
 	  	
 	  </select>
 	  
+	  <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	  <!-- CDATA 안에 쿼리를 사용하면 쿼리 내용의 괄호나 특수문자를 XML parser로 인식하지 않고
+	   "문자열"로 인식한다 이말입니다. 문자열로! p188 
+	   -->
+	  <![CDATA[
+    
+	    SELECT 
+	    	bno bno,
+	    	title title,
+	    	content content,
+	    	writer writer,
+	    	regdate regdate,
+	    	updatedate updateDate
+	    
+	     FROM tbl_board
+	     
+	     ORDER BY bno DESC
+	     
+	     LIMIT #{from}, #{amount}
+     
+    ]]>
+	  </select>
+	  
+	  
+	  <select id="getTotalCount" resultType="int">
+ 		 SELECT COUNT(*) FROM tbl_board
+ 	 </select>
+	  
 	  <insert id="insert">
 	  		INSERT INTO tbl_board (title, content, writer)
 	  		VALUES (#{title}, #{content}, #{writer})
