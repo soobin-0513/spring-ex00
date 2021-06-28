@@ -1,4 +1,4 @@
-package org.zerock.controller.lecture;
+package org.zerock.controller.lecture.nomal;
 
 import java.util.List;
 
