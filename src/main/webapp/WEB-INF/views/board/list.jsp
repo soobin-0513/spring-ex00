@@ -56,6 +56,8 @@ $(document).ready(function() {
 								<c:param name="bno" value="${board.bno }" />
 								<c:param name="pageNum" value="${pageMaker.cri.pageNum }" />
 								<c:param name="amount" value="${pageMaker.cri.amount }" />
+								<c:param name="type" value="${pageMaker.cri.type }"></c:param>
+								<c:param name="keyword" value="${pageMaker.cri.keyword }"></c:param>
 							</c:url>
 
 							<a href="${getUrl}">
@@ -89,7 +91,7 @@ $(document).ready(function() {
 		<%-- href value
 		href="${appRoot }/board/list?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}"
 		 --%>
-		    <li class="page-item"><a class="page-link" 
+		    <li class="page-item" ${ num == cri.pageNum ? 'active' : '' }><a class="page-link" 
 		    href="${num }">${num }</a></li>
 		</c:forEach>
 	
@@ -101,10 +103,13 @@ $(document).ready(function() {
 	  </ul>
 	</nav>
 	
+	<!--페이지 링크용 form  -->
 	<div style="display: none;">
 		<form id="actionForm" action="${appRoot }/board/list" method="get">
-			<input name="pageNum" value="${pageMaker.cri.pageNum }" />
-			<input name="amount" value="${pageMaker.cri.amount }" />
+			<input name="pageNum" value="${cri.pageNum }" />
+			<input name="amount" value="${cri.amount }" />
+			<input name="type" value="${cri.type }" />
+			<input name="keyword" value="${cri.keyword }" />
 		</form>
 	</div>
 </div>

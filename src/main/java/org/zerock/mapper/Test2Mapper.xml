@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.mapper.Test2Mapper">
+
+	<select id="sql1" resultType="int">
+		SELECT count(*) FROM tbl_board WHERE writer = #{t}
+	</select>
+
+	<select id="sql2" resultType="int" >
+
+		<if test='type == "a"'>
+			SELECT 1
+		</if>
+		<if test='type == "b"'>
+			SELECT 2
+		</if>
+
+	</select>
+	
+	
+	<select id="sql3" resultType="int">
+		SELECT count(*) FROM tbl_board
+		WHERE
+		<if test='type == "a"'>
+			writer = 'user00'
+		</if>
+
+		<if test='type == "b"'>
+			content = 'javajava'
+		</if>		
+
+	</select>
+	
+		<select id="sql4" resultType="int">
+		SELECT count(*) FROM tbl_board
+		<where>
+		
+		<if test='type == "a"'>
+			writer = 'user00'
+		</if>
+
+		<if test='type == "b"'>
+			content = 'javajava'
+		</if>		
+		</where>
+
+	</select>
+	
+		<select id="sql5" resultType="int">
+		SELECT count(*) FROM tbl_board
+		<where>
+			<choose>
+				<when test='type == "a"'>
+					writer = 'user00'
+				</when>
+				<when test='type == "b"'>
+					content = 'javajava'
+				</when>	
+				<otherwise>
+					title = 'abcdef'
+				</otherwise>	
+			</choose>
+		</where>		
+		
+	</select>	
+	
+	<select id="sql6" resultType="int">
+	
+	SELECT COUNT(*) FROM tbl_board
+	
+	WHERE writer IN (
+	
+		<trim suffixOverrides=",">
+			<foreach item="wr" collection="list">
+				#{wr} ,
+			</foreach>
+		</trim>
+	
+	);
+	
+	</select>
+	
+	<select id="sql7" resultType="int">
+		SELECT COUNT(*) FROM tbl_board
+		WHERE
+
+		writer IN (
+
+		<foreach item="item" separator="," collection="list">
+			#{item}
+		</foreach>
+
+		)
+
+	</select>
+</mapper>

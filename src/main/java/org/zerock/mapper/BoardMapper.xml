@@ -4,7 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="org.zerock.mapper.BoardMapper">
-
+		
+	 <sql id="criteria">
+		 <where>
+		     <foreach item="type" separator="OR" collection="typeArr">
+		     	<choose>
+		     		<when test='type == "T"'>
+		     			title LIKE CONCAT('%', #{keyword}, '%')
+		     		</when>
+		     		<when test='type == "W"'>
+		     			writer LIKE CONCAT('%', #{keyword}, '%')
+		     		</when>
+		     		<when test='type == "C"'>
+		     			content LIKE CONCAT('%', #{keyword}, '%')
+		     		</when>
+		     	</choose>
+		     </foreach>
+	     </where>
+	 </sql>
 	  <select id="getList" resultType="org.zerock.domain.BoardVO">
 	  <!-- CDATA 안에 쿼리를 사용하면 쿼리 내용의 괄호나 특수문자를 XML parser로 인식하지 않고
 	   "문자열"로 인식한다 이말입니다. 문자열로! p188 
@@ -26,32 +43,29 @@
 	  	
 	  </select>
 	  
-	  <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
-	  <!-- CDATA 안에 쿼리를 사용하면 쿼리 내용의 괄호나 특수문자를 XML parser로 인식하지 않고
-	   "문자열"로 인식한다 이말입니다. 문자열로! p188 
-	   -->
-	  <![CDATA[
-    
-	    SELECT 
-	    	bno bno,
-	    	title title,
-	    	content content,
-	    	writer writer,
-	    	regdate regdate,
-	    	updatedate updateDate
-	    
-	     FROM tbl_board
-	     
-	     ORDER BY bno DESC
-	     
-	     LIMIT #{from}, #{amount}
+	 <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+
+    SELECT 
+    	bno bno,
+    	title title,
+    	content content,
+    	writer writer,
+    	regdate regdate,
+    	updatedate updateDate
+     FROM tbl_board
      
-    ]]>
-	  </select>
+     <include refid="criteria"></include>
+
+
+     ORDER BY bno DESC
+     LIMIT #{from}, #{amount}
+
+  </select>
 	  
 	  
 	  <select id="getTotalCount" resultType="int">
  		 SELECT COUNT(*) FROM tbl_board
+ 		  <include refid="criteria"></include>
  	 </select>
 	  
 	  <insert id="insert">
