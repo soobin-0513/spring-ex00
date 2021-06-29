@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.mapper.ReplyMapper">
+
+	<insert id="insert">
+		INSERT INTO tbl_reply (bno, reply, replyer)
+		VALUES (#{bno}, #{reply}, #{replyer})
+		
+	</insert>
+
+	
+	<select id="read" resultType="org.zerock.domain.ReplyVO">
+		SELECT 
+			rno rno,
+			bno bno,
+			reply reply,
+			replyer replyer,
+			replyDate replyDate,
+			updateDate updateDate
+		FROM 
+		    tbl_reply
+		WHERE
+			rno = #{rno}		
+	
+	
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM tbl_reply WHERE rno = #{rno}
+	</delete>
+		
+	<insert id="insertSelectKey" useGeneratedKeys="true" keyProperty="rno" keyColumn="rno">
+		INSERT INTO tbl_reply (bno, reply, replyer)
+		VALUES (#{bno}, #{reply}, #{replyer})
+		
+	</insert>
+	
+	<update id="update">
+	UPDATE tbl_reply
+	SET reply = #{reply},
+	    replyer = #{replyer},
+	    updateDate = now()
+	WHERE rno = #{rno}
+	</update>
+</mapper>
