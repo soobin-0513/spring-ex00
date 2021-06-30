@@ -2,6 +2,8 @@ package org.zerock.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,16 @@ public class ReplyMapperTests {
 		vo = mapper.read(2L);
 		assertEquals(re, vo.getReply());
 
+	}
+	
+	@Test
+	public void testGetList() {
+		Long bno = 94L;
+		
+		List<ReplyVO> list = mapper.getList(bno);
+		assertTrue(list.size() > 0);
+		
+		
 	}
 	
 }

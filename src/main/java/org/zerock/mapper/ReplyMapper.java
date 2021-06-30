@@ -1,5 +1,7 @@
 package org.zerock.mapper;
 
+import java.util.List;
+
 import org.zerock.domain.ReplyVO;
 
 public interface ReplyMapper {
@@ -13,4 +15,6 @@ public interface ReplyMapper {
 	public int delete(Long rno);
 	
 	public int update(ReplyVO vo);
+	
+	public List<ReplyVO> getList(Long bno);
 }

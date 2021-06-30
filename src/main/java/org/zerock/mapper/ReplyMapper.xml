@@ -45,4 +45,20 @@
 	    updateDate = now()
 	WHERE rno = #{rno}
 	</update>
+	
+	<select id="getList" resultType="org.zerock.domain.ReplyVO">
+		SELECT 
+			rno rno,
+			bno bno,
+			reply reply,
+			replyer replyer,
+			replyDate replyDate,
+			updateDate updateDate
+		FROM 
+		    tbl_reply
+		WHERE
+		    bno = #{bno}
+		ORDER BY rno ASC
+
+</select>
 </mapper>
