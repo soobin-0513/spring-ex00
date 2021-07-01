@@ -10,13 +10,13 @@
 		     <foreach item="type" separator="OR" collection="typeArr">
 		     	<choose>
 		     		<when test='type == "T"'>
-		     			title LIKE CONCAT('%', #{keyword}, '%')
+		     			b.title LIKE CONCAT('%', #{keyword}, '%')
 		     		</when>
 		     		<when test='type == "W"'>
-		     			writer LIKE CONCAT('%', #{keyword}, '%')
+		     			b.writer LIKE CONCAT('%', #{keyword}, '%')
 		     		</when>
 		     		<when test='type == "C"'>
-		     			content LIKE CONCAT('%', #{keyword}, '%')
+		     			b.content LIKE CONCAT('%', #{keyword}, '%')
 		     		</when>
 		     	</choose>
 		     </foreach>
@@ -46,25 +46,27 @@
 	 <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 
     SELECT 
-    	bno bno,
-    	title title,
-    	content content,
-    	writer writer,
-    	regdate regdate,
-    	updatedate updateDate
-     FROM tbl_board
+    	b.bno bno,
+    	b.title title,
+    	b.content content,
+    	b.writer writer,
+    	b.regdate regdate,
+    	b.updatedate updateDate,
+    	COUNT(r.rno) replyCnt
+     FROM tbl_board b LEFT JOIN tbl_reply r ON b.bno = r.bno
      
      <include refid="criteria"></include>
 
 
-     ORDER BY bno DESC
+     GROUP BY b.bno
+     ORDER BY b.bno DESC
      LIMIT #{from}, #{amount}
 
   </select>
 	  
 	  
 	  <select id="getTotalCount" resultType="int">
- 		 SELECT COUNT(*) FROM tbl_board
+ 		 SELECT COUNT(*) FROM tbl_board b
  		  <include refid="criteria"></include>
  	 </select>
 	  

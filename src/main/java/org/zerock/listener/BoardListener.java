@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebListener;
  * Application Lifecycle Listener implementation class BoardListener
  *
  */
-@WebListener
+//@WebListener
 public class BoardListener implements ServletContextListener {
 
     /**

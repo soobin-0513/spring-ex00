@@ -62,6 +62,9 @@ $(document).ready(function() {
 
 							<a href="${getUrl}">
 								${board.title }
+								<c:if test="${board.replyCnt > 0 }">
+									<i class="far fa-comments"></i> ${board.replyCnt }
+								</c:if>
 							</a>
 						</td>
 						<td>${board.writer }</td>

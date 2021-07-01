@@ -39,7 +39,8 @@ public class ReplyController {
 	*/
 	@PostMapping("/new")
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
-		service.register(vo);
+		log.info("reply new");
+//		service.register(vo);
 		
 		int cnt = service.register(vo);
 		

@@ -61,4 +61,8 @@
 		ORDER BY rno ASC
 
 </select>
+
+<select id="getCountByBno" resultType="int">
+SELECT COUNT(*) FROM tbl_reply WHERE bno = #{bno}
+</select>
 </mapper>
