@@ -13,9 +13,21 @@ CREATE TABLE tbl_reply(
 SELECT * FROM tbl_board
 ORDER BY bno DESC;
 SELECT * FROM tbl_reply
-ORDER BY bno DESC;
+ORDER BY rno DESC;
 
 -- 댓글이 있는 게시물 조회 
 SELECT
 DISTINCT(b.bno)
 FROM tbl_board b JOIN tbl_reply r ON b.bno = r.bno;
+
+
+SELECT b.bno, 
+b.title, 
+b.content, 
+b.writer, 
+b.regdate, 
+b.updatedate,
+count(r.rno)
+FROM tbl_board b LEFT JOIN tbl_reply r ON b.bno = r.bno
+GROUP BY b.bno
+ORDER BY b.bno DESC;

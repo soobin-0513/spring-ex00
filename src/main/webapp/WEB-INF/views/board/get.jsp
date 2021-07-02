@@ -17,6 +17,13 @@
 <script> 
 var appRoot = "${appRoot}";
 var boardBno = "${board.bno}";
+
+/* function showReplyList(list){
+	// empty 비워주는 이유: 밑에서 append 추가해줘서 댓글이 중복해서 보임 
+	var container =$("#reply-list-container").empty();
+}
+ */
+
 </script>
 <script src="${appRoot }/resources/js/get.js"></script>
 </head>
