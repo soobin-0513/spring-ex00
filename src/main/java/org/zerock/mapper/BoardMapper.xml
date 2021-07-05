@@ -83,14 +83,15 @@
 	  
 	  <select id="read" resultType ="org.zerock.domain.BoardVO">
 		  	SELECT 
-		  	bno bno,
-		  	title title,
-		  	content content,
-		  	writer writer,
-		  	regdate regdate,
-		  	updatedate updatedate
-		  	FROM tbl_board
-		  	WHERE bno = #{bno}
+		  	 b.bno bno,
+		  	 b.title title,
+		  	 b.content content,
+		  	 b.writer writer,
+		  	 b.regdate regdate,
+		  	 b.updatedate updateDate,
+		  	 f.fileName fileName
+		  	FROM tbl_board b LEFT JOIN tbl_board_file f ON b.bno = f.bno
+		  	WHERE b.bno = #{bno}
 	  </select>
 	  
 	  <delete id="delete">

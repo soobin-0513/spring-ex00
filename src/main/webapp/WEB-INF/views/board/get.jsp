@@ -43,8 +43,15 @@ var boardBno = "${board.bno}";
 					<div class="form-group">
 						<label for="textarea1">내용</label>
 						<textarea readonly="readonly" id="textarea1" class="form-control" 
-						name="content"><c:out value="${board.content }" /></textarea>
+						name="content" rows="5"><c:out value="${board.content }" /></textarea>
 					</div>
+					<c:if test="${not empty board.fileName }">
+					
+						<div class="form-group">
+							<img class="img-fluid" 
+							src="${imgRoot}${board.bno }/${board.fileName}">
+						</div>
+					</c:if>
 					<div class="form-group">
 						<label for="input2">작성자</label>
 						<input readonly="readonly" id="input2" class="form-control" name="writer" value="${board.writer }">
