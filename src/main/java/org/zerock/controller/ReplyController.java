@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,10 @@ public class ReplyController {
 		this.service =service;
 	}
 	*/
+	
+	
 	@PostMapping("/new")
+	@PreAuthorize("isAuthenticated()")//P673
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		log.info("reply new");
 //		service.register(vo);
@@ -51,20 +55,29 @@ public class ReplyController {
 		}	
 	}
 	
+	
 	@GetMapping("/pages/{bno}")
 	public List<ReplyVO> getList(@PathVariable("bno") Long bno) {
 
 		return service.getList(bno);
 	} 
+	
+	
+	
+	
 	@GetMapping("/{rno}")
 	public ReplyVO get(@PathVariable Long rno) {
 
+		log.info("댓글줘!!");
 		return service.get(rno);
 	}
 	
+	
 //	@RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
 	@DeleteMapping("/{rno}")
-	public ResponseEntity<String> remove(@PathVariable Long rno) {
+	//@PreAuthorize("isAuthenticated()")//P673
+	@PreAuthorize("principal.username == #vo.replyer")
+	public ResponseEntity<String> remove(@RequestBody ReplyVO vo, @PathVariable Long rno) {
 
 		int cnt = service.remove(rno);
 
@@ -75,8 +88,12 @@ public class ReplyController {
 		}
 	}
 	
-	@RequestMapping(value="/{rno}", method ={RequestMethod.PUT, RequestMethod.PATCH})
 	
+	
+	@RequestMapping(value="/{rno}", method ={RequestMethod.PUT, RequestMethod.PATCH})
+	//@PreAuthorize("isAuthenticated()")//P673
+	//로그인할때만 수정할수있어  !! 책에서 작성한 방법 p720 
+	@PreAuthorize("principal.username == #vo.replyer")
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable Long rno){
 		int cnt = service.modify(vo);
 		

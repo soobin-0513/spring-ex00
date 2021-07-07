@@ -1,6 +1,9 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 
 <c:url value="/board/list" var="listUrl">
 	<c:if test="${not empty cri.pageNum }">
@@ -13,6 +16,8 @@
 		<c:param name="type" value="${cri.type }"></c:param>
 </c:url>
 
+
+
 <c:url value="/board/register" var="registerUrl">
 	<c:if test="${not empty cri.pageNum }">
 		<c:param name="pageNum" value="${cri.pageNum }"></c:param>
@@ -24,8 +29,12 @@
 		<c:param name="type" value="${cri.type }"></c:param>
 </c:url>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="${appRoot }/board/list">스프링 게시판</a>
+
+
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <a class="navbar-brand" href="${appRoot }/board/list">
+  	<img alt="spring-log" width="110" src="${appRoot }/resources/img/spring-logo.svg">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,9 +44,11 @@
       <li class="nav-item">
         <a class="nav-link" href="${listUrl }"><i class="fas fa-list"></i> 목록보기</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${registerUrl }"><i class="fas fa-pen"></i> 글쓰기</a>
-      </li>
+       <sec:authorize access="isAuthenticated()">
+	      <li class="nav-item">
+	        <a class="nav-link" href="${registerUrl }"><i class="fas fa-pen"></i> 글쓰기</a>
+	      </li>
+      </sec:authorize>
       <li class="nav-item">
         <a class="nav-link" href="${appRoot}/secure/all">모두</a>
       </li>
@@ -51,12 +62,17 @@
   </div>
   
   
-  <form action="${appRoot }/logout" method="post">
-  	<input type="submit" class="btn btn-outline-secondary" value="로그아웃">
-  </form>
+  <!--  로그아웃  -->
+  				<!--  로그인한 사용자만 보이게  -->
+ <sec:authorize access="isAuthenticated()">
+	  <form action="${appRoot }/logout" method="post">
+	  	<input type="submit" class="btn btn-outline-success  m-2" value="로그아웃">
+	  </form>
+  </sec:authorize>
+  
+  
   
   <!-- 검색  -->
-
   <form action="${listUrl }" method="get" class="form-inline">
   
     	<select name="type" class="form-control mr-sm-2">
@@ -77,5 +93,9 @@
     	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
   
-  
 </nav>
+  <br>
+
+
+
+

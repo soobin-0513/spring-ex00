@@ -2,6 +2,7 @@
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="bd" tagdir="/WEB-INF/tags/board" %>
 
 <% request.setCharacterEncoding("utf-8"); %>
@@ -17,6 +18,7 @@
 <script> 
 var appRoot = "${appRoot}";
 var boardBno = "${board.bno}";
+var userid = "${pinfo.member.userid}";
 
 /* function showReplyList(list){
 	// empty 비워주는 이유: 밑에서 append 추가해줘서 댓글이 중복해서 보임 
@@ -64,8 +66,10 @@ var boardBno = "${board.bno}";
 						<c:param name="type" value="${cri.type }" />
 						<c:param name="keyword" value="${cri.keyword }" />
 					</c:url>
-
-					<a class="btn btn-secondary" href="${modifyUrl }">수정/삭제</a>	
+						
+					<c:if test="${pinfo.member.userid eq board.writer }" >
+						<a class="btn btn-secondary" href="${modifyUrl }">수정/삭제</a>
+					</c:if>
 				</form>
 			</div>
 		</div>
@@ -84,9 +88,11 @@ var boardBno = "${board.bno}";
 					<div class="p-2 bd-highlight">
 						<span class="font-weight-bold">댓글 </span>
 					</div>
-					<div class="ml-auto p-2 bd-highlight">
-						<button type="button" class="btn btn-primary class="text-right" data-toggle="modal" data-target="#reply-insert-modal" >댓글 작성 </button>
-					</div>
+					<sec:authorize access="isAuthenticated()">
+						<div class="ml-auto p-2 bd-highlight">
+							<button type="button" class="btn btn-primary class="text-right" data-toggle="modal" data-target="#reply-insert-modal" >댓글 작성 </button>
+						</div>
+					</sec:authorize>
 				</div>
 				<br>
 				<ul class="list-unstyled" id="reply-list-container">
@@ -143,7 +149,8 @@ var boardBno = "${board.bno}";
           <input type="text" value="${board.bno }" readonly hidden id="reply-bno-input2">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">작성자</label>
-            <input type="text" class="form-control" id="reply-replyer-input2" readonly="readonly">
+          	 <input type="hidden" readonly="readonly" id="input2" class="form-control" name="writer" value="${board.writer }">
+			<input readonly="readonly" class="form-control" value="${board.writerName }">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">댓글</label>
@@ -153,8 +160,11 @@ var boardBno = "${board.bno}";
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="reply-modify-btn1" type="button" class="btn btn-primary">댓글 수정</button>
-        <button id="reply-delete-btn1" type="button" class="btn btn-danger">댓글 삭제</button>
+        
+          <span id="reply-modify-delete-btn-wrapper">
+	        <button id="reply-modify-btn1" type="button" class="btn btn-warning">댓글 수정</button>
+	        <button id="reply-delete-btn1" type="button" class="btn btn-danger">댓글 삭제</button>
+        </span>
       </div>
     </div>
   </div>

@@ -16,10 +16,13 @@
 		<security:intercept-url pattern="/secure/admin" access="hasRole('ROLE_ADMIN')"/>
 		
 		<!-- 권한있는사람만 접근가능,권한없으면 밑에 로그인폼으로 이동!  -->
-		<security:form-login login-page="/member/login"/>
+		<security:form-login login-page="/member/login" default-target-url="/board/list" />
 		<security:logout/>
 		<!-- ?????  권장하는 방법은 아님, 연습용으로 코드 간편하게하기위해  -->
 		<security:csrf disabled="true"/>
+		
+		<!-- p676  자동로그인  -->
+		<security:remember-me data-source-ref="dataSource"/>
 	</security:http>
 	
 	<security:authentication-manager>

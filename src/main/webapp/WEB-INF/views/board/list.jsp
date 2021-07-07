@@ -37,7 +37,7 @@ $(document).ready(function() {
 	<div class="container">
 
 		<h1>글 목록 </h1>
-		<table class="table table-striped">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -67,7 +67,7 @@ $(document).ready(function() {
 								</c:if>
 							</a>
 						</td>
-						<td>${board.writer }</td>
+						<td>${board.writerName }</td>
 						<td>
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }"/>
 						</td>
