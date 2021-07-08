@@ -36,7 +36,7 @@
 						<input name="remember-me" type="checkbox" class="form-check-input" id="checkbox1"/>
 						<label class="form-check-label" for="checkbox1">remember me</label>
 					</div>
-					<input class="btn btn-primary" type="submit" value="로그인">
+					<input class="btn btn-success" type="submit" value="로그인">
 				</form>
 			</div>
 		</div>	

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.zerock.domain.MemberVO;
 
 import lombok.Getter;
+import lombok.Setter;
 
 // 책 668 쪽
 public class CustomUser extends User {
@@ -16,6 +17,7 @@ public class CustomUser extends User {
 	
 	//Member 정보를 꺼내서 볼수있게 
 	@Getter
+	@Setter
 	private MemberVO member;
 
 	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {

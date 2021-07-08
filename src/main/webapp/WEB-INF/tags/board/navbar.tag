@@ -29,6 +29,29 @@
 		<c:param name="type" value="${cri.type }"></c:param>
 </c:url>
 
+<!-- 회원가입 페이지 ! -->
+<c:url value="/member/signup" var="signUpUrl">
+	<c:if test="${not empty cri.pageNum }">
+		<c:param name="pageNum" value="${cri.pageNum }"></c:param>
+	</c:if>
+	<c:if test="${not empty cri.amount }">
+		<c:param name="amount" value="${cri.amount }"></c:param>
+	</c:if>
+		<c:param name="keyword" value="${cri.keyword }"></c:param>
+		<c:param name="type" value="${cri.type }"></c:param>
+</c:url>
+
+<!-- 회원정보 페이지 ! -->
+<c:url value="/member/info" var="memberInfoUrl">
+	<c:if test="${not empty cri.pageNum }">
+		<c:param name="pageNum" value="${cri.pageNum }"></c:param>
+	</c:if>
+	<c:if test="${not empty cri.amount }">
+		<c:param name="amount" value="${cri.amount }"></c:param>
+	</c:if>
+		<c:param name="keyword" value="${cri.keyword }"></c:param>
+		<c:param name="type" value="${cri.type }"></c:param>
+</c:url>
 
 
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
@@ -49,6 +72,9 @@
 	        <a class="nav-link" href="${registerUrl }"><i class="fas fa-pen"></i> 글쓰기</a>
 	      </li>
       </sec:authorize>
+      <%--
+        security 연습용
+        
       <li class="nav-item">
         <a class="nav-link" href="${appRoot}/secure/all">모두</a>
       </li>
@@ -58,10 +84,29 @@
       <li class="nav-item">
         <a class="nav-link" href="${appRoot }/secure/admin">어드민만</a>
       </li>
+       
+       --%>
+      
+<!-- 회원가입  -->
+      <sec:authorize access="!isAuthenticated()">
+	  	<li class="nav-item">
+	  		<a class="nav-link" href="${signUpUrl }">회원가입</a>
+	  	</li>
+	  </sec:authorize>
     </ul>
   </div>
   
-  
+  <!-- 회원정보  -->
+    <sec:authorize access="isAuthenticated()">
+	  		<a class="btn btn-outline-success m-2" href="${memberInfoUrl }">회원정보</a>
+	  </sec:authorize>
+	  
+	  
+   <!--  로그인   -->
+     <sec:authorize access="!isAuthenticated()">
+		<a href="${appRoot }/member/login" class="btn btn-outline-success m-2">로그인</a>  
+   </sec:authorize>
+   
   <!--  로그아웃  -->
   				<!--  로그인한 사용자만 보이게  -->
  <sec:authorize access="isAuthenticated()">

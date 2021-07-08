@@ -4,7 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="org.zerock.mapper.ReplyMapper">
-
+	
+	<select id="read" resultType="org.zerock.domain.ReplyVO">
+		SELECT 
+			r.rno rno,
+			r.bno bno,
+			r.reply reply,
+			r.replyer replyer,
+			r.replyDate replyDate,
+			r.updateDate updateDate,
+			m.username replyerName
+		FROM 
+		    tbl_reply r JOIN tbl_member m ON r.replyer = m.userid
+		WHERE
+			r.rno = #{rno}			
+	
+	
+	</select>
+	
+	
 	<insert id="insert">
 		INSERT INTO tbl_reply (bno, reply, replyer)
 		VALUES (#{bno}, #{reply}, #{replyer})
@@ -12,26 +30,6 @@
 	</insert>
 
 	
-	<select id="read" resultType="org.zerock.domain.ReplyVO">
-		SELECT 
-			rno rno,
-			bno bno,
-			reply reply,
-			replyer replyer,
-			replyDate replyDate,
-			updateDate updateDate
-		FROM 
-		    tbl_reply
-		WHERE
-			rno = #{rno}		
-	
-	
-	</select>
-	
-	<delete id="delete">
-		DELETE FROM tbl_reply WHERE rno = #{rno}
-	</delete>
-		
 	<insert id="insertSelectKey" useGeneratedKeys="true" keyProperty="rno" keyColumn="rno">
 		INSERT INTO tbl_reply (bno, reply, replyer)
 		VALUES (#{bno}, #{reply}, #{replyer})
@@ -48,27 +46,40 @@
 	
 	<select id="getList" resultType="org.zerock.domain.ReplyVO">
 		SELECT 
-			rno rno,
-			bno bno,
-			reply reply,
-			replyer replyer,
-			replyDate replyDate,
-			updateDate updateDate
+			r.rno rno,
+			r.bno bno,
+			r.reply reply,
+			r.replyer replyer,
+			r.replyDate replyDate,
+			r.updateDate updateDate,
+			m.username replyerName
 		FROM 
-		    tbl_reply
+		    tbl_reply r JOIN tbl_member m ON r.replyer = m.userid
 		WHERE
-		    bno = #{bno}
-		ORDER BY rno ASC
+		      r.bno = #{bno}
+		ORDER BY r.rno ASC
 
-</select>
+	</select>
 
 
 	<select id="getCountByBno" resultType="int">
 	SELECT COUNT(*) FROM tbl_reply WHERE bno = #{bno}
 	</select>
 
+
 	<delete id="deleteByBno">
 		DELETE FROM tbl_reply WHERE bno = #{bno}
 	</delete>
+	
+		
+	<delete id="delete">
+		DELETE FROM tbl_reply WHERE rno = #{rno}
+	</delete>
+	
+	<delete id="removeByUserid">
+		DELETE FROM tbl_reply
+		WHERE replyer = #{userid}
+	</delete>
+	
 
 </mapper>

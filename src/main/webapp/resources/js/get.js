@@ -11,6 +11,7 @@
 				success: function (reply) {
 					$("#reply-rno-input2").val(reply.rno);
 					$("#reply-replyer-input2").val(reply.replyer);
+					$("#reply-replyerName-input2").val(reply.replyerName);
 					$("#reply-reply-textarea2").text(reply.reply);
 
 					// 댓글 작성자와 로그인 유저가 같지 않으면 
@@ -37,6 +38,7 @@
 			})
 		}
 		
+		//댓글보여주는 함수 
 		function showReplyList(list){
 			// empty 비워주는 이유: 밑에서 append 추가해줘서 댓글이 중복해서 보임 
 			var container =$("#reply-list-container").empty();
@@ -49,7 +51,7 @@
 					<div class="media-body p-2">
 						<div class="row">
 							<div class="col align-self-start">
-								<i class="far fa-user"></i><span class="my-4 font-weight-bold"> : ${reply.replyer}</span>						
+								<i class="far fa-user"></i><span class="my-4 font-weight-bold"> : ${reply.replyerName}</span>						
 							</div>
 							<div class="col align-self-end text-right">
 								<small>${new Date(reply.replyDate).toISOString().split("T")[0]}</small>

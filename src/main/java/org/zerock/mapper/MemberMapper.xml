@@ -5,12 +5,33 @@
   
 <mapper namespace="org.zerock.mapper.MemberMapper">
 
-
+	<!-- 회원탈퇴를 하면, 권한도 지워야하고, 댓글도 다 지워야함 -->
+	<!--  권한 지우기  -->
+	<delete id="removeAuth">
+		DELETE FROM tbl_member_auth
+		WHERE userid = #{userid}
+	</delete>
+	
+	<!-- 회원 탈퇴  -->
+	<delete id="remove">
+	DELETE FROM tbl_member
+	WHERE userid = #{userid}
+	</delete>
+	<!--  정보 수정  -->
+	<update id="update">
+	  UPDATE tbl_member
+	  SET userpw = #{userpw},
+	      userName = #{userName}
+	      updatedate = now()
+	  WHERE
+	      userid = #{userid}
+   </update>
+   
 	<insert id="insert">
 		INSERT INTO tbl_member
 		(userid, userpw, username)
 		VALUES
-		(#{userid}, #{userpw}, #{username})
+		(#{userid}, #{userpw}, #{userName})
 	</insert>
 	
 	<insert id="insertAuth">
@@ -34,7 +55,7 @@
 	  WHERE
 	    m.userid = #{userid}
 
-  </select>
+     </select>
 	
 	<!-- 책 662쪽 -->
 	  <resultMap type="org.zerock.domain.MemberVO" id="memberMap">

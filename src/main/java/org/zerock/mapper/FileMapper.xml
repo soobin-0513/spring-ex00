@@ -5,7 +5,7 @@
   
 <mapper namespace="org.zerock.mapper.FileMapper">
 
-		
+	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		INSERT INTO tbl_board_file (bno, fileName)
 		VALUES (#{bno}, #{fileName})
@@ -16,4 +16,11 @@
 		DELETE FROM tbl_board_file WHERE bno = #{bno}
 	</delete>
 
+	<delete id="removeByUserid">
+		DELETE FROM tbl_board_file
+		WHERE bno IN(
+			SELECT bno FROM tbl_board
+			WHERE writer = #{userid}
+		)
+	</delete>
 </mapper>

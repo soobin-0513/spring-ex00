@@ -101,6 +101,11 @@
 	  		DELETE FROM tbl_board WHERE bno = #{bno}
 	  </delete>
 	  
+	  <delete id="removeByUserid">
+	 	 DELETE FROM tbl_board
+ 		 WHERE writer = #{userid}
+	  </delete>
+	  
 	  <update id="update">
 	  		UPDATE tbl_board
 
