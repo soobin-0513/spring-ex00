@@ -82,4 +82,11 @@
 	</delete>
 	
 
+	<delete id="removeByBnoByUserid">
+	DELETE FROM tbl_reply
+	WHERE bno IN (
+		SELECT bno FROM tbl_board WHERE writer = #{userid}
+	)
+	</delete>
+	
 </mapper>
