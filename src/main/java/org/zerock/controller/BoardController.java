@@ -123,6 +123,10 @@ public class BoardController {
 	
 	//로그인할때만 삭제할 수 있게 !! 책에서 작성한 방법 p720 
 	@PreAuthorize("principal.username == #writer")
+	
+	//07.20 비즈니스권한 있는 자들만 실행되게하는 메소드 
+	//@PreAuthorize("hasRole('ROLE_BUSINESS')")
+	
 	public String remove(@RequestParam("bno")Long bno, 
 			Criteria cri,RedirectAttributes rttr, String writer) {
 		//		request parameter 수집 

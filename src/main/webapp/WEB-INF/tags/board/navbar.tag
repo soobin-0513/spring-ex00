@@ -72,6 +72,13 @@
 	        <a class="nav-link" href="${registerUrl }"><i class="fas fa-pen"></i> 글쓰기</a>
 	      </li>
       </sec:authorize>
+      
+<%--  07.20 비즈니스권한있을때만 보이기 ! 
+<sec:authorize access="hasRole('ROLE_BUSINESS')">
+	      <li class="nav-item">
+	        <a class="nav-link" href="${registerUrl }"><i class="fas fa-pen"></i> 글쓰기</a>
+	      </li>
+      </sec:authorize> --%>
       <%--
         security 연습용
         
